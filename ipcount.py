@@ -10,6 +10,7 @@ with open("/tmp/access.log", encoding="utf-8") as f:
 total = sum(counts.values())
 print(counts.values())
 print(total)
+print("question 3------->",counts.most_common(10))
 
 for ip, n in counts.most_common(10):
     pct = n /total * 100
