@@ -1,6 +1,20 @@
 from collections import Counter
+import functools
+import time
 
 
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        t = time.perf_counter()
+        result = func(*args, **kwargs)
+        cost = (time.perf_counter() - t) * 1000
+        print(f"[timer] {func.__name__} 耗时 {cost:.2f} ms")
+        return result
+    return wrapper
+
+
+@timer
 def read_ips(path):
     """从日志文件读出所有 IP，返回一个列表"""
     ips = []
@@ -12,6 +26,7 @@ def read_ips(path):
     return ips
 
 
+@timer
 def read_paths(path):
     """从日志文件读出所有路径"""
     paths = []
